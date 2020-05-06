@@ -6,8 +6,9 @@ require('database.php');
 $link = db_connect();
 require('models/films.php');
 
-// Обновление в базы данных
-if (array_key_exists('updateFilm', $_POST)) {
+// Добавляем в базу данных
+if (array_key_exists('newFilm', $_POST)) {
+
     // Обработка ошибок
     if ($_POST['title'] == '') {
         $errors[] = "<p>Необходимо ввести название фильма!</p>";
@@ -17,25 +18,26 @@ if (array_key_exists('updateFilm', $_POST)) {
     }
     if ($_POST['year'] == '') {
         $errors[] = "<p>Необходимо ввести год создания фильма!</p>";
-    }
-    if (empty($errors)) {
-        // Запись в базу данных
-        if (empty($errors)) {
-            $result = film_update($link, $_POST['title'], $_POST['genre'], $_POST['year'], $_GET['id'], $_POST['description']);
-            if (($result)) {
-                $notifySucces =  "<p>Фильм успешно обновлен!</p>";
-            } else {
-                $notifyError = "<p>Что-то пошло не так!Попробуйте еще раз!</p>";
-            }
-        }        
-    }
-}
+    }    
 
-$film = get_film($link, $_GET['id']);
+    if (empty($errors)) {
+        $result = films_new($link, $_POST['title'], $_POST['genre'], $_POST['year'], $_POST['description'] );
+        if (($result)) {
+            $notifySucces =  "<p>Фильм успешно добавлен!</p>";
+        } else {
+            $notifyError = "<p>Что-то пошло не так!Попробуйте еще раз!</p>";
+        }
+    }
+    
+}
 
 include('views/head.tpl');
 include('views/notifications.tpl');
-include('views/edit-film.tpl');
+include('views/new-film.tpl');
 include('views/footer.tpl');
 
 ?>
+
+
+
+
