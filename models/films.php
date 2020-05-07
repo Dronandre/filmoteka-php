@@ -53,7 +53,7 @@ function film_update($link, $title, $genre, $year, $id, $description){
             $errors[] = 'That image has no dimensions';
         }
 
-        $db_file_name = rand(1000000000000,9999999999999) . "." . $fileExt;
+        $db_file_name = rand(100000,999999) . "." . $fileExt;
         if ($fileSize > 10485760) {
             $errors[] = 'Your image file was larger than 10mb';
         } else if (!preg_match("/\.(gif|jpg|png|jpeg)$/i", $fileName)) {
@@ -79,18 +79,16 @@ function film_update($link, $title, $genre, $year, $id, $description){
         $wmax = 137;
         $hmax = 200;
         $img = createThumbnail($target_file, $wmax, $hmax);
-        $img->writeImage($resized_file);
-
-    }
-
-
+        $img->writeImage($resized_file);        
+    } else $db_file_name = 'noimg.jpg';
+    
     $query = "  UPDATE films 
     SET title = '" . mysqli_real_escape_string($link,  $title) . "',
     genre = '" . mysqli_real_escape_string($link, $genre) . "' , 
     year = '" . mysqli_real_escape_string($link, $year) . "', 
     description = '" . mysqli_real_escape_string($link, $description) . "',   
-    photo = '" . mysqli_real_escape_string($link, $db_file_name) . "'   
-    WHERE id = '".mysqli_real_escape_string($link, $id)."' LIMIT 1";                    
+    photo = '" . mysqli_real_escape_string($link, @$db_file_name) . "'   
+    WHERE id = '".mysqli_real_escape_string($link, $id)."' LIMIT 1";  
 
     if (mysqli_query($link, $query)) {
         $result =  true;

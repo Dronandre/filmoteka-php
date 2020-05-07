@@ -5,6 +5,8 @@ require('database.php');
 // Возращаем функцию
 $link = db_connect();
 require('models/films.php');
+require('functions\login-functions.php');
+
 
 // Обновление в базы данных
 if (array_key_exists('updateFilm', $_POST)) {
@@ -32,6 +34,11 @@ if (array_key_exists('updateFilm', $_POST)) {
 }
 
 $film = get_film($link, $_GET['id']);
+
+
+echo"<pre>";
+print_r($film);
+echo"</pre>";
 
 include('views/head.tpl');
 include('views/notifications.tpl');

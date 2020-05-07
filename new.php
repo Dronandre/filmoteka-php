@@ -5,6 +5,7 @@ require('database.php');
 // Возращаем функцию
 $link = db_connect();
 require('models/films.php');
+require('functions\login-functions.php');
 
 // Добавляем в базу данных
 if (array_key_exists('newFilm', $_POST)) {

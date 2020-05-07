@@ -23,8 +23,8 @@
         </div>
         <textarea class="textarea mb-20" name="description" placeholder="Введите описание фильма"><?= $film['description'] ?></textarea>
         <div class="mb-20">
-            <input type="file" name="photo" >
-        </div>        
+            <input type="file" name="<?= $film['photo'] ?>" >
+        </div>            
         <input class="button" type="submit" name="updateFilm" value="Обновить" />
     </form>
 </div>
